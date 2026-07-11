@@ -1,0 +1,77 @@
+.landing {
+  width: min(980px, 100%);
+  padding: 3.5rem 1.25rem 4rem;
+  display: grid;
+  gap: 2rem;
+}
+
+.hero {
+  display: grid;
+  gap: 1rem;
+}
+
+.badge {
+  justify-self: start;
+  background: #efe8ff;
+  color: #5c35b2;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+}
+
+.hero-text {
+  max-width: 70ch;
+}
+
+.cta-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+button {
+  border-radius: 0.65rem;
+  border: 1px solid transparent;
+  padding: 0.7rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.primary {
+  background: #6c3cf0;
+  color: #ffffff;
+}
+
+.secondary {
+  border-color: #c8c1de;
+  background: #ffffff;
+  color: #201a33;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  border: 1px solid #ded8f2;
+  border-radius: 0.9rem;
+  padding: 1rem;
+  background: #faf9ff;
+}
+
+.how-it-works {
+  border: 1px solid #e6e2f7;
+  border-radius: 0.9rem;
+  padding: 1.25rem;
+  background: #ffffff;
+}
+
+.how-it-works ol {
+  margin: 0.75rem 0 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.65rem;
+}
