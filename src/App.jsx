@@ -1,34 +1,35 @@
 import './App.css'
+import './additions.css'
 
 const brandLinks = {
-  email: 'hola@hseon.app',
-  instagram: 'https://www.instagram.com/hseon.app/',
-  appStore: 'https://apps.apple.com/es/search?term=hseon',
+  email: 'hola@hse.onl',
+  instagram: 'https://www.instagram.com/hse.onl/',
+  appStore: 'https://apps.apple.com/es/search?term=HSE.onl',
 }
 
 const benefits = [
   {
     number: '01',
-    title: 'Cuenta lo que te pasó',
-    text: 'Comparte una experiencia real, una decisión difícil o algo que aprendiste por el camino.',
+    title: 'Sube tu currículum',
+    text: 'Importa tu trayectoria para que HSE.onl detecte cambios, decisiones y aprendizajes que merecen una buena pregunta.',
   },
   {
     number: '02',
-    title: 'Profundiza con IA',
-    text: 'Un chat inteligente te ayuda a ordenar ideas, encontrar matices y convertir tu historia en algo útil.',
+    title: 'Ayuda a alguien más',
+    text: 'Responde preguntas concretas sobre tu carrera y convierte lo que aprendiste en contexto útil para otras personas.',
   },
   {
     number: '03',
-    title: 'Ayuda a alguien más',
-    text: 'Publica una conclusión clara para que otras personas encuentren contexto, no solo respuestas rápidas.',
+    title: 'Aprende de tus errores',
+    text: 'Revisar tus propias respuestas te ayuda a identificar patrones, entender tus decisiones y tomar mejores caminos.',
   },
 ]
 
 const subscriptionTerms = [
-  'Acceso gratuito durante la etapa de lanzamiento.',
-  'Cualquier precio futuro se mostrará antes de confirmar el pago.',
-  'Las suscripciones de pago se renovarán automáticamente hasta su cancelación.',
-  'Podrás cancelar desde los ajustes, sin permanencia ni penalización.',
+  '20 € por un mes de acceso.',
+  'La suscripción se renueva automáticamente cada mes hasta que la canceles.',
+  'Puedes cancelar en cualquier momento desde los ajustes de tu cuenta de Apple.',
+  'El cobro y la gestión de la suscripción se realizan a través del App Store.',
 ]
 
 function ArrowIcon() {
@@ -66,10 +67,14 @@ function InstagramIcon() {
   )
 }
 
-function AppStoreIcon() {
+function AppleIcon() {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M8.8 7.4 6.1 12M15.2 7.4l2.7 4.6M9.9 5.6 12 2l2.1 3.6M5 15h14M7 19h1.5M15.5 19H17" />
+    <svg viewBox="0 0 32 38" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M26.4 20.2c0-5.2 4.3-7.7 4.5-7.8-2.4-3.6-6.2-4-7.6-4.1-3.2-.3-6.3 1.9-7.9 1.9-1.7 0-4.2-1.8-6.9-1.8-3.5.1-6.8 2.1-8.6 5.2-3.7 6.4-.9 15.9 2.6 21.1 1.7 2.5 3.8 5.3 6.5 5.2 2.6-.1 3.6-1.7 6.8-1.7 3.1 0 4.1 1.7 6.9 1.6 2.8-.1 4.6-2.5 6.3-5 2-2.9 2.8-5.8 2.8-6-.1 0-5.4-2.1-5.4-8.6ZM21.2 4.9C22.6 3.2 23.5.8 23.3-1.5c-2 .1-4.5 1.4-5.9 3.1-1.3 1.5-2.4 3.9-2.1 6.1 2.2.2 4.5-1.1 5.9-2.8Z"
+        transform="translate(0 2)"
+      />
     </svg>
   )
 }
@@ -84,21 +89,71 @@ function PhoneFrame({ children, label, className = '' }) {
   )
 }
 
+function FeedHeader({ title = 'Para ti', back = false }) {
+  return (
+    <div className="career-feed-header">
+      <span className="feed-header-side">{back ? '‹' : <span className="brand-mark small">H</span>}</span>
+      <strong>{title}</strong>
+      <span className="feed-header-side feed-menu">•••</span>
+    </div>
+  )
+}
+
+function QuestionPost({ initials, role, time, question, preview, answers, accent = '' }) {
+  return (
+    <article className={`question-post ${accent}`}>
+      <div className="question-post-author">
+        <span className="mini-avatar">{initials}</span>
+        <p>
+          <strong>Pregunta de HSE.onl</strong>
+          <small>{role} · {time}</small>
+        </p>
+        <SparkIcon />
+      </div>
+      <h4>{question}</h4>
+      {preview && <p className="answer-preview">{preview}</p>}
+      <div className="question-post-actions">
+        <span>♡</span>
+        <span>↗</span>
+        <button type="button">{answers} respuestas</button>
+      </div>
+    </article>
+  )
+}
+
+function AppStoreBadge({ compact = false }) {
+  return (
+    <a
+      className={`official-store-badge ${compact ? 'compact-store-badge' : ''}`}
+      href={brandLinks.appStore}
+      target="_blank"
+      rel="noreferrer"
+      aria-label="Descargar HSE.onl en el App Store"
+    >
+      <AppleIcon />
+      <span>
+        <small>Descárgalo en el</small>
+        <strong>App Store</strong>
+      </span>
+    </a>
+  )
+}
+
 function App() {
   return (
     <div className="site-shell">
       <header className="site-header">
-        <a className="brand" href="#inicio" aria-label="Hseon, inicio">
+        <a className="brand" href="#inicio" aria-label="HSE.onl, inicio">
           <span className="brand-mark">H</span>
-          <span>hseon</span>
+          <span className="brand-word">HSE.onl</span>
         </a>
         <nav className="nav-links" aria-label="Navegación principal">
-          <a href="#experiencias">Experiencias</a>
+          <a href="#feed">Feed profesional</a>
           <a href="#como-funciona">Cómo funciona</a>
           <a href="#suscripcion">Suscripción</a>
         </nav>
-        <a className="nav-cta" href="#descarga">
-          Probar Hseon
+        <a className="nav-cta" href={brandLinks.appStore} target="_blank" rel="noreferrer">
+          Descargar
           <ArrowIcon />
         </a>
       </header>
@@ -108,156 +163,175 @@ function App() {
           <div className="hero-copy">
             <div className="eyebrow">
               <SparkIcon />
-              Historias reales. Conversaciones inteligentes.
+              Preguntas de IA. Respuestas de profesionales.
             </div>
-            <h1>Lo que viviste puede ayudar a alguien.</h1>
+            <h1>Tu carrera puede enseñar a alguien.</h1>
             <p className="hero-lede">
-              Hseon es el espacio en español para compartir experiencias, hacer preguntas y llegar más lejos con chats de inteligencia artificial.
+              HSE.onl convierte trayectorias profesionales en preguntas útiles. Descubre cómo otras personas tomaron decisiones, superaron errores y construyeron su carrera.
             </p>
             <div className="hero-actions">
-              <a className="button button-primary" href="#descarga">
-                Descargar la app
-                <ArrowIcon />
-              </a>
-              <a className="button button-ghost" href="#experiencias">
-                Ver cómo se siente
+              <AppStoreBadge compact />
+              <a className="button button-ghost" href="#feed">
+                Ver el feed
               </a>
             </div>
-            <div className="hero-proof" aria-label="Datos de la comunidad">
+            <div className="hero-proof" aria-label="Propuesta de la comunidad">
               <div className="avatar-stack" aria-hidden="true">
-                <span>LM</span>
-                <span>AR</span>
-                <span>SC</span>
+                <span>PM</span>
+                <span>UX</span>
+                <span>DS</span>
                 <span>+2k</span>
               </div>
               <p>
-                <strong>Una comunidad que escucha</strong>
-                <span>Conversaciones sin ruido ni respuestas vacías.</span>
+                <strong>Aprende de carreras reales</strong>
+                <span>Preguntas generadas por IA, respuestas escritas por personas.</span>
               </p>
             </div>
           </div>
 
-          <div className="hero-visual" aria-label="Vista previa de Hseon">
+          <div className="hero-visual" aria-label="Vista previa del feed profesional de HSE.onl">
             <div className="orb orb-one" />
             <div className="orb orb-two" />
-            <PhoneFrame label="Pantalla de una conversación con inteligencia artificial en Hseon" className="hero-phone">
-              <div className="app-topbar">
-                <span className="mini-avatar ai-avatar">H</span>
-                <div>
-                  <strong>Guía Hseon</strong>
-                  <small>En línea</small>
-                </div>
-                <span className="topbar-action">•••</span>
+            <PhoneFrame label="Feed de preguntas profesionales de HSE.onl" className="hero-phone feed-phone">
+              <FeedHeader />
+              <div className="feed-tabs"><span className="active">Recomendado</span><span>Siguiendo</span></div>
+              <div className="career-feed-scroll">
+                <QuestionPost
+                  initials="IA"
+                  role="Producto"
+                  time="12 min"
+                  question="¿Qué error de producto te enseñó más que cualquier lanzamiento exitoso?"
+                  preview="Cancelé una funcionalidad después de seis meses. El problema no era la ejecución: nunca validamos la urgencia…"
+                  answers="38"
+                  accent="featured-question"
+                />
+                <QuestionPost
+                  initials="IA"
+                  role="Cambio de carrera"
+                  time="34 min"
+                  question="¿Cómo supiste que era momento de dejar una profesión estable?"
+                  answers="24"
+                />
+                <QuestionPost
+                  initials="IA"
+                  role="Liderazgo"
+                  time="1 h"
+                  question="¿Qué conversación difícil evitaste demasiado tiempo como manager?"
+                  answers="51"
+                />
               </div>
-              <div className="chat-date">Hoy</div>
-              <div className="chat-bubble chat-bubble-in">
-                ¿Qué aprendiste después de cambiar de carrera?
-              </div>
-              <div className="chat-bubble chat-bubble-out">
-                Que no necesitaba tener todo resuelto para empezar.
-              </div>
-              <div className="ai-note">
-                <SparkIcon />
-                <p>
-                  <strong>Eso puede ayudar a muchas personas.</strong>
-                  ¿Qué te habría gustado saber antes de dar el paso?
-                </p>
-              </div>
-              <div className="chat-composer">
-                <span>Escribe tu respuesta…</span>
-                <button type="button" aria-label="Enviar respuesta">↑</button>
-              </div>
+              <div className="feed-bottom-nav"><span>⌂</span><span>⌕</span><span className="feed-add">+</span><span>♧</span><span>○</span></div>
             </PhoneFrame>
             <div className="floating-card floating-card-top">
-              <span className="floating-icon">✓</span>
-              <p><strong>Experiencia publicada</strong><small>Lista para ayudar</small></p>
+              <span className="floating-icon">CV</span>
+              <p><strong>Trayectoria analizada</strong><small>12 preguntas preparadas</small></p>
             </div>
             <div className="floating-card floating-card-bottom">
-              <div className="mini-avatars" aria-hidden="true"><span>V</span><span>M</span><span>J</span></div>
-              <p><strong>18 personas</strong><small>guardaron tu historia</small></p>
+              <div className="mini-avatars" aria-hidden="true"><span>M</span><span>L</span><span>J</span></div>
+              <p><strong>38 profesionales</strong><small>respondieron esta pregunta</small></p>
             </div>
           </div>
         </section>
 
-        <section className="trust-strip" aria-label="Principios de Hseon">
-          <span>Experiencias verificadas por la comunidad</span>
-          <span>IA para profundizar, no para sustituirte</span>
-          <span>Diseñado primero en español</span>
+        <section className="trust-strip" aria-label="Principios de HSE.onl">
+          <span>Tu currículum inicia la conversación</span>
+          <span>La IA pregunta; las personas responden</span>
+          <span>Historias centradas en la carrera</span>
         </section>
 
-        <section className="section experience-section" id="experiencias">
+        <section className="section experience-section" id="feed">
           <div className="section-heading centered-heading">
-            <p className="section-kicker">Así se ve Hseon</p>
-            <h2>Una conversación puede convertirse en una guía.</h2>
-            <p>Explora experiencias, pregunta con confianza y comparte lo que realmente te funcionó.</p>
+            <p className="section-kicker">Así se ve HSE.onl</p>
+            <h2>Un feed para entender cómo se construyen las carreras.</h2>
+            <p>Desliza preguntas, abre los hilos que te interesan y compara respuestas de personas con trayectorias distintas.</p>
           </div>
 
-          <div className="screenshots-grid">
+          <div className="screenshots-grid career-screenshots-grid">
             <article className="screenshot-card screenshot-feed">
               <div className="screenshot-copy">
                 <span>01 · Descubre</span>
-                <h3>Historias con contexto, no titulares.</h3>
-                <p>Encuentra personas que ya pasaron por algo parecido y entiende qué cambió de verdad.</p>
+                <h3>Preguntas que nacen de trayectorias profesionales.</h3>
+                <p>La IA transforma momentos de carrera en preguntas concretas que merecen respuestas con contexto.</p>
               </div>
-              <PhoneFrame label="Pantalla de descubrimiento de experiencias en Hseon">
-                <div className="feed-header">
-                  <span className="brand-mark small">H</span>
-                  <strong>Para ti</strong>
-                  <span className="search-dot">⌕</span>
-                </div>
-                <div className="topic-row"><span>Trabajo</span><span>Bienestar</span><span>Viajes</span></div>
-                <div className="story-card featured-story">
-                  <div className="story-author"><span className="mini-avatar">MC</span><p><strong>Marina C.</strong><small>Hace 2 h</small></p></div>
-                  <h4>Me mudé sola a otra ciudad. Esto es lo que nadie me contó.</h4>
-                  <p>La parte difícil no fue encontrar casa, sino construir una rutina desde cero…</p>
-                  <div className="story-meta"><span>♡ 148</span><span>24 respuestas</span></div>
-                </div>
-                <div className="story-card compact-story">
-                  <div className="story-author"><span className="mini-avatar alt">JP</span><p><strong>Jorge P.</strong><small>Hace 5 h</small></p></div>
-                  <h4>Cambiar de sector a los 35 sí fue posible.</h4>
-                  <div className="story-meta"><span>♡ 92</span><span>Guardar</span></div>
+              <PhoneFrame label="Feed infinito de preguntas profesionales en HSE.onl" className="feed-phone">
+                <FeedHeader />
+                <div className="feed-tabs"><span className="active">Para ti</span><span>Recientes</span></div>
+                <div className="career-feed-scroll">
+                  <QuestionPost
+                    initials="IA"
+                    role="Emprendimiento"
+                    time="8 min"
+                    question="¿Cuál fue la señal más clara de que tu primera idea de negocio no funcionaba?"
+                    preview="Las personas elogiaban la demo, pero nadie cambiaba su proceso para usarla…"
+                    answers="42"
+                    accent="featured-question"
+                  />
+                  <QuestionPost
+                    initials="IA"
+                    role="Tecnología"
+                    time="27 min"
+                    question="¿Qué habilidad subestimaste al pasar de ingeniería a liderazgo?"
+                    answers="31"
+                  />
+                  <QuestionPost
+                    initials="IA"
+                    role="Primer empleo"
+                    time="46 min"
+                    question="¿Qué habrías negociado de otra manera en tu primer contrato?"
+                    answers="64"
+                  />
                 </div>
               </PhoneFrame>
             </article>
 
             <article className="screenshot-card screenshot-chat">
               <div className="screenshot-copy">
-                <span>02 · Profundiza</span>
-                <h3>Una IA que pregunta antes de responder.</h3>
-                <p>Ordena lo que piensas y descubre los detalles que hacen que tu experiencia sea útil.</p>
+                <span>02 · Compara</span>
+                <h3>Toca una pregunta y lee cómo la resolvieron otros.</h3>
+                <p>Cada hilo reúne respuestas breves, perfiles profesionales y aprendizajes que puedes guardar.</p>
               </div>
-              <PhoneFrame label="Pantalla de chat reflexivo con inteligencia artificial en Hseon">
-                <div className="app-topbar light-topbar">
-                  <span className="back-arrow">‹</span>
-                  <div><strong>Explorar una decisión</strong><small>Guía de IA</small></div>
-                  <span className="topbar-action">•••</span>
+              <PhoneFrame label="Hilo con respuestas profesionales en HSE.onl" className="thread-phone">
+                <FeedHeader title="38 respuestas" back />
+                <div className="thread-question">
+                  <span><SparkIcon /> Pregunta generada por IA</span>
+                  <h4>¿Qué error de producto te enseñó más que cualquier lanzamiento exitoso?</h4>
                 </div>
-                <div className="chat-date">Sesión privada</div>
-                <div className="chat-bubble chat-bubble-in">¿Qué era lo que más te frenaba?</div>
-                <div className="chat-bubble chat-bubble-out">Pensar que empezar de nuevo era perder tiempo.</div>
-                <div className="chat-bubble chat-bubble-in">¿Qué ocurrió para que empezaras a verlo de otra manera?</div>
-                <div className="typing-row"><span /><span /><span /></div>
-                <div className="chat-composer compact-composer"><span>Cuéntame más…</span><button type="button" aria-label="Enviar respuesta">↑</button></div>
+                <div className="thread-answer">
+                  <div className="story-author"><span className="mini-avatar">MC</span><p><strong>Marina C.</strong><small>Product Lead · Madrid</small></p></div>
+                  <p>Construimos para usuarios avanzados porque eran quienes más hablaban. Los nuevos usuarios abandonaban antes de llegar al valor.</p>
+                  <div className="thread-meta"><span>♡ 148</span><span>Responder</span><span>Guardar</span></div>
+                </div>
+                <div className="thread-answer">
+                  <div className="story-author"><span className="mini-avatar alt">JP</span><p><strong>Jorge P.</strong><small>Founder · Valencia</small></p></div>
+                  <p>Confundí interés con intención de compra. Desde entonces pregunto qué dejarían de usar para adoptar mi producto.</p>
+                  <div className="thread-meta"><span>♡ 92</span><span>Responder</span><span>Guardar</span></div>
+                </div>
+                <button className="answer-question-button" type="button">Añadir mi respuesta</button>
               </PhoneFrame>
             </article>
 
             <article className="screenshot-card screenshot-publish">
               <div className="screenshot-copy">
-                <span>03 · Comparte</span>
-                <h3>Publica una conclusión que se recuerde.</h3>
-                <p>La IA propone una estructura; tu voz y tus aprendizajes siguen siendo los protagonistas.</p>
+                <span>03 · Reflexiona</span>
+                <h3>Responde para ayudar y entender mejor tu propia carrera.</h3>
+                <p>Tu currículum aporta el contexto; tus respuestas convierten decisiones y errores en aprendizaje.</p>
               </div>
-              <PhoneFrame label="Pantalla para publicar una experiencia en Hseon">
-                <div className="publish-topbar"><span>Cancelar</span><strong>Nueva experiencia</strong><span>Vista previa</span></div>
-                <div className="publish-form">
-                  <span className="field-label">TÍTULO</span>
-                  <h4>Lo que aprendí al empezar de cero en una ciudad nueva</h4>
-                  <span className="field-label">TU CONCLUSIÓN</span>
-                  <p>No necesitas sentirte preparada para comenzar. Necesitas una primera rutina, una persona a quien llamar y permiso para tardar.</p>
-                  <div className="ai-suggestion"><SparkIcon /><p><strong>Sugerencia de Hseon</strong><small>Añade un ejemplo concreto de tu primera semana.</small></p></div>
-                  <div className="tags"><span>#cambios</span><span>#vivirsola</span><span>#aprendizajes</span></div>
-                  <button className="publish-button" type="button">Publicar experiencia</button>
+              <PhoneFrame label="Pantalla para responder una pregunta profesional en HSE.onl" className="answer-phone">
+                <FeedHeader title="Tu respuesta" back />
+                <div className="answer-context">
+                  <span>Pregunta sugerida a partir de tu CV</span>
+                  <h4>¿Qué aprendiste al cambiar de una empresa grande a una startup?</h4>
                 </div>
+                <div className="answer-editor">
+                  <p>Al principio intenté reproducir procesos que solo funcionaban con equipos mucho más grandes. Aprendí a distinguir entre control y claridad…</p>
+                  <span className="editor-cursor" />
+                </div>
+                <div className="reflection-card">
+                  <SparkIcon />
+                  <p><strong>Una pregunta para profundizar</strong><small>¿Qué proceso eliminaste primero y qué cambió después?</small></p>
+                </div>
+                <div className="answer-tags"><span>#cambiodecarrera</span><span>#startups</span></div>
+                <button className="publish-button" type="button">Publicar respuesta</button>
               </PhoneFrame>
             </article>
           </div>
@@ -266,8 +340,8 @@ function App() {
         <section className="section how-section" id="como-funciona">
           <div className="section-heading">
             <p className="section-kicker">Cómo funciona</p>
-            <h2>Tu experiencia. Mejor explicada.</h2>
-            <p>Hseon te acompaña desde la primera idea hasta una publicación capaz de ayudar a otra persona.</p>
+            <h2>Tu currículum abre preguntas que vale la pena responder.</h2>
+            <p>HSE.onl convierte tu trayectoria en una oportunidad para ayudar a otros y revisar tu propio aprendizaje profesional.</p>
           </div>
           <div className="benefits-grid">
             {benefits.map((benefit) => (
@@ -284,23 +358,23 @@ function App() {
           <div className="values-visual">
             <div className="quote-card quote-card-one">
               <span className="quote-mark">“</span>
-              <p>Leer a alguien que ya había pasado por lo mismo me dio la claridad que necesitaba.</p>
-              <div><span className="mini-avatar">LA</span><strong>Lucía, 29</strong></div>
+              <p>Leer varias respuestas a la misma pregunta me mostró que no existe una sola carrera correcta.</p>
+              <div><span className="mini-avatar">LA</span><strong>Lucía, Product Manager</strong></div>
             </div>
             <div className="quote-card quote-card-two">
               <span className="quote-mark">“</span>
-              <p>El chat no me dio una respuesta prefabricada. Me ayudó a encontrar la mía.</p>
-              <div><span className="mini-avatar alt">DM</span><strong>Diego, 34</strong></div>
+              <p>Responder me obligó a entender por qué repetía el mismo error al cambiar de equipo.</p>
+              <div><span className="mini-avatar alt">DM</span><strong>Diego, Data Lead</strong></div>
             </div>
           </div>
           <div className="values-copy">
-            <p className="section-kicker">Una comunidad más humana</p>
-            <h2>La IA abre la conversación. Las personas le dan sentido.</h2>
-            <p>Creemos en un internet donde compartir una experiencia sirva para comprender, decidir y acompañar.</p>
+            <p className="section-kicker">Aprendizaje profesional colectivo</p>
+            <h2>La IA encuentra la pregunta. Las personas aportan la experiencia.</h2>
+            <p>HSE.onl no inventa historias: genera preguntas a partir de trayectorias y reúne respuestas humanas en un feed enfocado en la carrera.</p>
             <ul>
-              <li><CheckIcon /><span><strong>Tu voz primero.</strong> La IA ordena y pregunta, pero nunca publica por ti.</span></li>
-              <li><CheckIcon /><span><strong>Control de privacidad.</strong> Decide qué guardar, qué compartir y con quién.</span></li>
-              <li><CheckIcon /><span><strong>Contenido útil.</strong> Diseñado para conversaciones respetuosas y experiencias concretas.</span></li>
+              <li><CheckIcon /><span><strong>Contexto profesional.</strong> El CV ayuda a proponer preguntas relevantes para cada etapa.</span></li>
+              <li><CheckIcon /><span><strong>Respuestas humanas.</strong> Cada aprendizaje publicado pertenece a la persona que lo vivió.</span></li>
+              <li><CheckIcon /><span><strong>Reflexión propia.</strong> Responder también te permite estudiar tus decisiones y patrones.</span></li>
             </ul>
           </div>
         </section>
@@ -308,56 +382,50 @@ function App() {
         <section className="section subscription-section" id="suscripcion">
           <div className="subscription-copy">
             <p className="section-kicker">Suscripción</p>
-            <h2>Empieza gratis. Decide después.</h2>
-            <p>Durante el lanzamiento puedes explorar, conversar y publicar sin coste. Los planes de pago llegarán con funciones avanzadas y condiciones transparentes.</p>
+            <h2>Un mes para estudiar carreras, incluida la tuya.</h2>
+            <p>Accede al feed completo, abre todos los hilos y recibe preguntas profesionales generadas a partir de tu currículum.</p>
             <ul className="terms-list">
               {subscriptionTerms.map((term) => (
                 <li key={term}><CheckIcon />{term}</li>
               ))}
             </ul>
-            <p className="legal-note">Las condiciones finales y el precio aplicable se mostrarán en la App Store antes de cualquier compra.</p>
+            <p className="legal-note">El precio y las condiciones de renovación se muestran también en el App Store antes de confirmar la compra.</p>
           </div>
           <div className="plan-card">
-            <div className="plan-badge">Acceso anticipado</div>
-            <p className="plan-name">Hseon Comunidad</p>
-            <div className="plan-price"><strong>0 €</strong><span>durante el lanzamiento</span></div>
+            <div className="plan-badge">Suscripción mensual</div>
+            <p className="plan-name">HSE.onl</p>
+            <div className="plan-price"><strong>20 €</strong><span>por mes</span></div>
             <div className="plan-divider" />
             <ul>
-              <li><CheckIcon />Explorar experiencias sin límite</li>
-              <li><CheckIcon />Chats de IA para profundizar</li>
-              <li><CheckIcon />Publicar y guardar historias</li>
-              <li><CheckIcon />Controles de privacidad</li>
+              <li><CheckIcon />Feed profesional completo</li>
+              <li><CheckIcon />Preguntas generadas a partir de tu CV</li>
+              <li><CheckIcon />Todos los hilos y respuestas</li>
+              <li><CheckIcon />Publicaciones y guardados sin límite</li>
             </ul>
-            <a className="button button-primary full-button" href={brandLinks.appStore} target="_blank" rel="noreferrer">
-              Ver en App Store
-              <ArrowIcon />
-            </a>
-            <small>Disponible próximamente. Sin tarjeta para unirte a la lista.</small>
+            <AppStoreBadge />
+            <small>Disponible ahora en el App Store. La suscripción se gestiona con tu cuenta de Apple.</small>
           </div>
         </section>
 
         <section className="download-section" id="descarga">
           <div className="download-glow" />
           <div className="download-content">
-            <p className="section-kicker light-kicker">Tu historia empieza aquí</p>
-            <h2>Comparte lo que sabes. Descubre lo que otros vivieron.</h2>
-            <p>Únete al lanzamiento de Hseon y ayúdanos a construir una comunidad en español donde cada experiencia cuenta.</p>
+            <p className="section-kicker light-kicker">Tu carrera tiene respuestas</p>
+            <h2>Descubre lo que otros aprendieron. Entiende mejor lo que aprendiste tú.</h2>
+            <p>Descarga HSE.onl, sube tu currículum y entra en un feed de preguntas que convierte carreras en conocimiento compartido.</p>
             <div className="download-actions">
-              <a className="store-button" href={brandLinks.appStore} target="_blank" rel="noreferrer">
-                <AppStoreIcon />
-                <span><small>Disponible próximamente en</small><strong>App Store</strong></span>
-              </a>
+              <AppStoreBadge />
               <a className="contact-link" href={`mailto:${brandLinks.email}`}>
-                Avisarme del lanzamiento
+                Contactar
                 <ArrowIcon />
               </a>
             </div>
           </div>
           <div className="download-phone" aria-hidden="true">
-            <PhoneFrame label="Pantalla de bienvenida de Hseon">
+            <PhoneFrame label="Pantalla de bienvenida de HSE.onl">
               <div className="welcome-screen">
                 <span className="welcome-logo">H</span>
-                <p>Una experiencia puede cambiar otra.</p>
+                <p>Tu carrera puede enseñar a alguien.</p>
                 <div className="welcome-lines"><span /><span /><span /></div>
               </div>
             </PhoneFrame>
@@ -368,12 +436,12 @@ function App() {
       <footer className="site-footer" id="contacto">
         <div className="footer-main">
           <div>
-            <a className="brand footer-brand" href="#inicio"><span className="brand-mark">H</span><span>hseon</span></a>
-            <p>Un lugar en español para compartir experiencias y convertirlas en conocimiento con ayuda de la IA.</p>
+            <a className="brand footer-brand" href="#inicio"><span className="brand-mark">H</span><span className="brand-word">HSE.onl</span></a>
+            <p>Un feed profesional en español con preguntas de IA y respuestas de personas que comparten lo aprendido en su carrera.</p>
           </div>
           <div className="footer-column">
             <strong>Explora</strong>
-            <a href="#experiencias">Experiencias</a>
+            <a href="#feed">Feed profesional</a>
             <a href="#como-funciona">Cómo funciona</a>
             <a href="#suscripcion">Suscripción</a>
           </div>
@@ -381,12 +449,12 @@ function App() {
             <strong>Contacto</strong>
             <a href={`mailto:${brandLinks.email}`}>{brandLinks.email}</a>
             <a href={brandLinks.instagram} target="_blank" rel="noreferrer" className="social-link"><InstagramIcon />Instagram</a>
-            <a href={brandLinks.appStore} target="_blank" rel="noreferrer" className="social-link"><AppStoreIcon />App Store</a>
+            <a href={brandLinks.appStore} target="_blank" rel="noreferrer" className="social-link"><AppleIcon />App Store</a>
           </div>
         </div>
         <div className="footer-bottom">
-          <span>© 2026 Hseon. Todos los derechos reservados.</span>
-          <div><a href="#suscripcion">Condiciones</a><a href="mailto:hola@hseon.app?subject=Privacidad%20en%20Hseon">Privacidad</a></div>
+          <span>© 2026 HSE.onl. Todos los derechos reservados.</span>
+          <div><a href="#suscripcion">Condiciones</a><a href={`mailto:${brandLinks.email}?subject=Privacidad%20en%20HSE.onl`}>Privacidad</a></div>
         </div>
       </footer>
     </div>
