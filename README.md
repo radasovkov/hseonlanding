@@ -1,4 +1,4 @@
-# Hseon Landing
+# HSE.onl Landing
 
 Landing page en React para Hseon, una comunidad en español donde las personas comparten experiencias y las convierten en conocimiento útil con ayuda de chats de inteligencia artificial.
 
