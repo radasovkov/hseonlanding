@@ -1,16 +1,29 @@
-# React + Vite
+# Hseon Landing
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Landing page en React para Hseon, una comunidad en español donde las personas comparten experiencias y las convierten en conocimiento útil con ayuda de chats de inteligencia artificial.
 
-Currently, two official plugins are available:
+## Incluye
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Hero con propuesta de valor y llamadas a la acción.
+- Mockups de las pantallas de descubrimiento, chat y publicación.
+- Explicación del producto y principios de privacidad.
+- Condiciones visibles de acceso y suscripción.
+- Contacto por correo, Instagram y enlace a App Store.
+- Diseño responsive y estados de foco accesibles.
 
-## React Compiler
+## Desarrollo
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm install
+npm run dev
+```
 
-## Expanding the Oxlint configuration
+Para generar la versión de producción:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+```bash
+npm run build
+```
+
+## Enlaces de marca
+
+El correo y los enlaces externos están centralizados en `brandLinks`, al principio de `src/App.jsx`. Sustituye esos valores cuando estén disponibles las URLs definitivas de Instagram y de la ficha de App Store.
