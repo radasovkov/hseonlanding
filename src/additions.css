@@ -1,0 +1,457 @@
+/* Product-specific additions for the HSE.onl career feed direction. */
+
+.brand-word {
+  letter-spacing: -0.055em;
+}
+
+.official-store-badge {
+  min-width: 210px;
+  min-height: 62px;
+  padding: 0.52rem 1rem 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.72rem;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 13px;
+  background: #050505;
+  color: #fff;
+  text-decoration: none;
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.16);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.official-store-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.22);
+}
+
+.official-store-badge svg {
+  flex: 0 0 auto;
+  width: 29px;
+  height: 34px;
+}
+
+.official-store-badge span {
+  display: grid;
+  line-height: 1;
+}
+
+.official-store-badge small {
+  margin-bottom: 0.2rem;
+  color: #fff;
+  font-size: 0.64rem;
+  letter-spacing: 0;
+}
+
+.official-store-badge strong {
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+
+.compact-store-badge {
+  min-width: 184px;
+  min-height: 54px;
+}
+
+.compact-store-badge svg {
+  width: 25px;
+  height: 29px;
+}
+
+.compact-store-badge small {
+  font-size: 0.57rem;
+}
+
+.compact-store-badge strong {
+  font-size: 1.08rem;
+}
+
+.plan-card > .official-store-badge {
+  width: 100%;
+  margin-top: 1.8rem;
+  justify-content: center;
+}
+
+.social-link svg {
+  fill: currentColor;
+  stroke: none;
+}
+
+.feed-phone .phone-screen,
+.thread-phone .phone-screen,
+.answer-phone .phone-screen {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+}
+
+.career-feed-header {
+  min-height: 70px;
+  padding: 1.42rem 0.9rem 0.72rem;
+  display: grid;
+  grid-template-columns: 34px 1fr 34px;
+  align-items: center;
+  border-bottom: 1px solid #ece9f0;
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.career-feed-header > strong {
+  color: #24212c;
+  font-size: 0.76rem;
+  text-align: center;
+}
+
+.feed-header-side {
+  min-width: 30px;
+  color: #5e5967;
+  font-size: 1.25rem;
+}
+
+.feed-menu {
+  justify-self: end;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+}
+
+.feed-tabs {
+  min-height: 38px;
+  padding: 0 0.75rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+  border-bottom: 1px solid #efecf2;
+  background: #fff;
+}
+
+.feed-tabs span {
+  position: relative;
+  display: grid;
+  place-items: center;
+  color: #95909e;
+  font-size: 0.58rem;
+  font-weight: 700;
+}
+
+.feed-tabs span.active {
+  color: #292531;
+}
+
+.feed-tabs span.active::after {
+  content: '';
+  position: absolute;
+  right: 22%;
+  bottom: 0;
+  left: 22%;
+  height: 2px;
+  border-radius: 999px;
+  background: #7464d8;
+}
+
+.career-feed-scroll {
+  min-height: 0;
+  padding-bottom: 0.5rem;
+  overflow: hidden;
+  flex: 1;
+  background: #f7f6f9;
+}
+
+.question-post {
+  padding: 0.78rem 0.82rem 0.72rem;
+  border-bottom: 1px solid #e9e6ed;
+  background: #fff;
+}
+
+.question-post + .question-post {
+  margin-top: 0.36rem;
+}
+
+.question-post.featured-question {
+  background: linear-gradient(145deg, #ffffff 0%, #f7f4ff 100%);
+}
+
+.question-post-author {
+  display: grid;
+  grid-template-columns: 30px 1fr 16px;
+  align-items: center;
+  gap: 0.48rem;
+}
+
+.question-post-author p {
+  min-width: 0;
+  display: grid;
+}
+
+.question-post-author strong {
+  color: #3a3542;
+  font-size: 0.61rem;
+}
+
+.question-post-author small {
+  margin-top: 0.08rem;
+  color: #9b95a2;
+  font-size: 0.51rem;
+}
+
+.question-post-author > svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: #7464d8;
+  stroke-width: 1.6;
+}
+
+.question-post h4 {
+  margin: 0.62rem 0 0.42rem;
+  color: #24202d;
+  font-size: 0.76rem;
+  line-height: 1.36;
+  letter-spacing: -0.015em;
+}
+
+.answer-preview {
+  display: -webkit-box;
+  overflow: hidden;
+  color: #726c79;
+  font-size: 0.58rem;
+  line-height: 1.48;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.question-post-actions {
+  margin-top: 0.62rem;
+  padding-top: 0.55rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-top: 1px solid #f0edf2;
+  color: #9b95a2;
+  font-size: 0.58rem;
+}
+
+.question-post-actions button {
+  margin-left: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #6759bd;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.feed-bottom-nav {
+  min-height: 48px;
+  padding: 0.25rem 0.9rem 0.65rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #e9e6ed;
+  background: #fff;
+  color: #77717f;
+  font-size: 0.92rem;
+}
+
+.feed-add {
+  width: 27px;
+  height: 27px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: #171522;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.floating-card-top .floating-icon {
+  width: 36px;
+  border-radius: 10px;
+  font-size: 0.58rem;
+}
+
+.thread-question,
+.answer-context {
+  padding: 1rem 0.9rem;
+  border-bottom: 1px solid #ece9ef;
+  background: #f8f6ff;
+}
+
+.thread-question > span,
+.answer-context > span {
+  display: flex;
+  align-items: center;
+  gap: 0.32rem;
+  color: #7464d8;
+  font-size: 0.52rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.thread-question > span svg {
+  width: 13px;
+  height: 13px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+}
+
+.thread-question h4,
+.answer-context h4 {
+  margin-top: 0.55rem;
+  color: #2a2631;
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.thread-answer {
+  padding: 0.88rem;
+  border-bottom: 1px solid #ece9ef;
+  background: #fff;
+}
+
+.thread-answer > p {
+  margin-top: 0.65rem;
+  color: #625d68;
+  font-size: 0.61rem;
+  line-height: 1.52;
+}
+
+.thread-meta {
+  margin-top: 0.68rem;
+  display: flex;
+  gap: 0.78rem;
+  color: #938d99;
+  font-size: 0.52rem;
+}
+
+.answer-question-button {
+  margin: auto 0.85rem 1.5rem;
+  padding: 0.72rem;
+  border: 0;
+  border-radius: 999px;
+  background: #7464d8;
+  color: #fff;
+  font-size: 0.62rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.answer-context {
+  background: #fff;
+}
+
+.answer-editor {
+  position: relative;
+  min-height: 150px;
+  margin: 0.78rem;
+  padding: 0.86rem;
+  border: 1px solid #e4e0e8;
+  border-radius: 14px;
+  background: #fcfbfd;
+}
+
+.answer-editor p {
+  color: #524c58;
+  font-size: 0.65rem;
+  line-height: 1.62;
+}
+
+.editor-cursor {
+  display: inline-block;
+  width: 1px;
+  height: 0.82rem;
+  margin-left: 0.14rem;
+  vertical-align: middle;
+  background: #7464d8;
+}
+
+.reflection-card {
+  margin: 0 0.78rem;
+  padding: 0.72rem;
+  display: flex;
+  gap: 0.48rem;
+  border-radius: 12px;
+  background: #efecff;
+  color: #6859bf;
+}
+
+.reflection-card svg {
+  flex: 0 0 auto;
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+}
+
+.reflection-card p {
+  display: grid;
+}
+
+.reflection-card strong {
+  color: #51458f;
+  font-size: 0.57rem;
+}
+
+.reflection-card small {
+  margin-top: 0.15rem;
+  color: #746d80;
+  font-size: 0.53rem;
+  line-height: 1.4;
+}
+
+.answer-tags {
+  margin: 0.8rem 0.78rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.answer-tags span {
+  padding: 0.32rem 0.5rem;
+  border-radius: 999px;
+  background: #edf4f1;
+  color: #4f7668;
+  font-size: 0.52rem;
+}
+
+.answer-phone .publish-button {
+  width: auto;
+  margin: auto 0.78rem 1.45rem;
+}
+
+.career-screenshots-grid .screenshot-card {
+  min-height: 790px;
+}
+
+.career-screenshots-grid .screenshot-copy {
+  min-height: 225px;
+}
+
+.plan-card .official-store-badge + small {
+  margin-top: 0.85rem;
+}
+
+@media (max-width: 840px) {
+  .official-store-badge {
+    text-align: left;
+  }
+
+  .hero-actions {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 560px) {
+  .official-store-badge {
+    min-width: 190px;
+  }
+
+  .career-screenshots-grid .screenshot-copy {
+    min-height: auto;
+  }
+}
