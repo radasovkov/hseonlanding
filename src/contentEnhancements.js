@@ -118,20 +118,28 @@ function updateSupportingCopy() {
   })
 }
 
+function hasRenderedContent() {
+  return Boolean(
+    document.querySelector('.question-post') &&
+    document.querySelector('.benefit-card'),
+  )
+}
+
 export function applyContentEnhancements() {
-  const apply = () => {
-    updateQuestionPosts()
-    updateBenefits()
-    updateSupportingCopy()
+  let frame = 0
+  const maxFrames = 120
+
+  const applyWhenReady = () => {
+    if (hasRenderedContent()) {
+      updateQuestionPosts()
+      updateBenefits()
+      updateSupportingCopy()
+      return
+    }
+
+    frame += 1
+    if (frame < maxFrames) requestAnimationFrame(applyWhenReady)
   }
 
-  apply()
-
-  const root = document.getElementById('root')
-  if (!root) return
-
-  const observer = new MutationObserver(() => apply())
-  observer.observe(root, { childList: true, subtree: true })
-
-  window.addEventListener('pagehide', () => observer.disconnect(), { once: true })
+  requestAnimationFrame(applyWhenReady)
 }
