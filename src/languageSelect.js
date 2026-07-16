@@ -31,10 +31,10 @@ function mountLanguageSelect() {
     const activeButton = getButtons().find((button) => button.classList.contains('active'))
     if (activeButton) select.value = activeButton.textContent.trim().toLowerCase()
 
-    select.setAttribute(
-      'aria-label',
-      switcher.getAttribute('aria-label') || 'Language',
-    )
+    const ariaLabel = switcher.getAttribute('aria-label') || 'Language'
+    if (select.getAttribute('aria-label') !== ariaLabel) {
+      select.setAttribute('aria-label', ariaLabel)
+    }
   }
 
   select.addEventListener('change', () => {
