@@ -80,9 +80,14 @@ function InstagramIcon() {
   )
 }
 
-function AppleIcon() {
+function AppleIcon({ size = 16 }) {
   return (
-    <svg viewBox="0 0 32 38" aria-hidden="true">
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 32 42"
+      aria-hidden="true"
+    >
       <path
         fill="currentColor"
         d="M26.4 20.2c0-5.2 4.3-7.7 4.5-7.8-2.4-3.6-6.2-4-7.6-4.1-3.2-.3-6.3 1.9-7.9 1.9-1.7 0-4.2-1.8-6.9-1.8-3.5.1-6.8 2.1-8.6 5.2-3.7 6.4-.9 15.9 2.6 21.1 1.7 2.5 3.8 5.3 6.5 5.2 2.6-.1 3.6-1.7 6.8-1.7 3.1 0 4.1 1.7 6.9 1.6 2.8-.1 4.6-2.5 6.3-5 2-2.9 2.8-5.8 2.8-6-.1 0-5.4-2.1-5.4-8.6ZM21.2 4.9C22.6 3.2 23.5.8 23.3-1.5c-2 .1-4.5 1.4-5.9 3.1-1.3 1.5-2.4 3.9-2.1 6.1 2.2.2 4.5-1.1 5.9-2.8Z"
@@ -105,7 +110,7 @@ function PhoneFrame({ children, label, className = '' }) {
 function FeedHeader({ title, back = false, menuLabel }) {
   return (
     <div className="career-feed-header">
-      <span className="feed-header-side">{back ? '‹' : <span className="brand-mark small">H</span>}</span>
+      <span className="feed-header-side">{back ? '‹' : <span className="brand-mark small"><img src="/src/assets/logo.png" alt="HSE.onl logo" /></span>}</span>
       <strong>{title}</strong>
       <span className="feed-header-side feed-menu" aria-label={menuLabel}>•••</span>
     </div>
@@ -233,7 +238,7 @@ function App() {
     <div className="site-shell">
       <header className="site-header">
         <a className="brand" href="#inicio" aria-label={t.aria.home}>
-          <span className="brand-mark">H</span>
+          <span className="brand-mark"><img src="/src/assets/logo.png" alt="HSE.onl logo" /></span>
           <span className="brand-word">HSE.onl</span>
         </a>
         <nav className="nav-links" aria-label={t.aria.nav}>
@@ -452,7 +457,9 @@ function App() {
           <div className="download-phone" aria-hidden="true">
             <PhoneFrame label={t.download.welcome}>
               <div className="welcome-screen">
-                <span className="welcome-logo">H</span>
+                <span className="welcome-big-logo">
+                  <img src="/src/assets/logo.png" alt="HSE.onl logo" />
+                </span>
                 <p>{t.download.welcome}</p>
                 <div className="welcome-lines"><span /><span /><span /></div>
               </div>
@@ -464,7 +471,7 @@ function App() {
       <footer className="site-footer" id="contacto">
         <div className="footer-main">
           <div>
-            <a className="brand footer-brand" href="#inicio"><span className="brand-mark">H</span><span className="brand-word">HSE.onl</span></a>
+            <a className="brand footer-brand" href="#inicio"><span className="brand-mark"><img src="/src/assets/logo.png" alt="HSE.onl logo" /></span><span className="brand-word">HSE.onl</span></a>
             <p>{t.footer.description}</p>
           </div>
           <div className="footer-column">
