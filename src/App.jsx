@@ -1,36 +1,14 @@
+import { useEffect, useState } from 'react'
 import './App.css'
 import './additions.css'
+import './localization.css'
+import { copy, localeOptions } from './translations.js'
 
 const brandLinks = {
   email: 'hola@hse.onl',
   instagram: 'https://www.instagram.com/hse.onl/',
   appStore: 'https://apps.apple.com/es/search?term=HSE.onl',
 }
-
-const benefits = [
-  {
-    number: '01',
-    title: 'Sube tu currículum',
-    text: 'Importa tu trayectoria para que HSE.onl detecte cambios, decisiones y aprendizajes que merecen una buena pregunta.',
-  },
-  {
-    number: '02',
-    title: 'Ayuda a alguien más',
-    text: 'Responde preguntas concretas sobre tu carrera y convierte lo que aprendiste en contexto útil para otras personas.',
-  },
-  {
-    number: '03',
-    title: 'Aprende de tus errores',
-    text: 'Revisar tus propias respuestas te ayuda a identificar patrones, entender tus decisiones y tomar mejores caminos.',
-  },
-]
-
-const subscriptionTerms = [
-  '20 € por un mes de acceso.',
-  'La suscripción se renueva automáticamente cada mes hasta que la canceles.',
-  'Puedes cancelar en cualquier momento desde los ajustes de tu cuenta de Apple.',
-  'El cobro y la gestión de la suscripción se realizan a través del App Store.',
-]
 
 function ArrowIcon() {
   return (
@@ -53,6 +31,41 @@ function CheckIcon() {
   return (
     <svg viewBox="0 0 20 20" aria-hidden="true">
       <path d="m4 10 4 4 8-9" />
+    </svg>
+  )
+}
+
+function CommentIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M20 11.5a7.5 7.5 0 0 1-8 7.5 9 9 0 0 1-3.8-.9L4 20l1.4-4A7.7 7.7 0 0 1 4 11.5 7.5 7.5 0 0 1 12 4a7.5 7.5 0 0 1 8 7.5Z" />
+    </svg>
+  )
+}
+
+function BranchIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="6" cy="5" r="2" />
+      <circle cx="18" cy="5" r="2" />
+      <circle cx="18" cy="19" r="2" />
+      <path d="M6 7v8a4 4 0 0 0 4 4h6M8 5h4a6 6 0 0 1 6 6v6" />
+    </svg>
+  )
+}
+
+function HeartIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M20.8 5.9a5.5 5.5 0 0 0-7.8 0L12 7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 22l8.8-8.3a5.5 5.5 0 0 0 0-7.8Z" />
+    </svg>
+  )
+}
+
+function StarIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-2.9-5.6 2.9 1.1-6.2L3 9.6l6.2-.9L12 3Z" />
     </svg>
   )
 }
@@ -81,7 +94,7 @@ function AppleIcon() {
 
 function PhoneFrame({ children, label, className = '' }) {
   return (
-    <div className={`phone-frame ${className}`} role="img" aria-label={label}>
+    <div className={`phone-frame ${className}`} role="group" aria-label={label}>
       <div className="phone-speaker" />
       <div className="phone-screen">{children}</div>
       <div className="phone-home" />
@@ -89,73 +102,152 @@ function PhoneFrame({ children, label, className = '' }) {
   )
 }
 
-function FeedHeader({ title = 'Para ti', back = false }) {
+function FeedHeader({ title, back = false, menuLabel }) {
   return (
     <div className="career-feed-header">
       <span className="feed-header-side">{back ? '‹' : <span className="brand-mark small">H</span>}</span>
       <strong>{title}</strong>
-      <span className="feed-header-side feed-menu">•••</span>
+      <span className="feed-header-side feed-menu" aria-label={menuLabel}>•••</span>
     </div>
   )
 }
 
-function QuestionPost({ initials, role, time, question, preview, answers, accent = '' }) {
+function ActionBar({ counts, labels, className = '' }) {
+  return (
+    <div className={`post-action-row ${className}`}>
+      <button className="post-action" type="button" aria-label={`${labels.comments}: ${counts.comments}`}>
+        <CommentIcon />
+        <span>{counts.comments}</span>
+      </button>
+      <button className="post-action" type="button" aria-label={`${labels.branches}: ${counts.branches}`}>
+        <BranchIcon />
+        <span>{counts.branches}</span>
+      </button>
+      <button className="post-action" type="button" aria-label={`${labels.likes}: ${counts.likes}`}>
+        <HeartIcon />
+        <span>{counts.likes}</span>
+      </button>
+      <button className="post-action post-action-save" type="button" aria-label={labels.save}>
+        <StarIcon />
+      </button>
+    </div>
+  )
+}
+
+function QuestionPost({ post, labels, accent = '' }) {
   return (
     <article className={`question-post ${accent}`}>
       <div className="question-post-author">
-        <span className="mini-avatar">{initials}</span>
+        <span className="mini-avatar ocean-mascot" aria-label={post.author}>{post.mascot}</span>
         <p>
-          <strong>Pregunta de HSE.onl</strong>
-          <small>{role} · {time}</small>
+          <strong>{post.author}</strong>
+          <small>{post.role} · {post.time}</small>
         </p>
         <SparkIcon />
       </div>
-      <h4>{question}</h4>
-      {preview && <p className="answer-preview">{preview}</p>}
-      <div className="question-post-actions">
-        <span>♡</span>
-        <span>↗</span>
-        <button type="button">{answers} respuestas</button>
-      </div>
+      <h4>{post.question}</h4>
+      {post.preview && <p className="answer-preview">{post.preview}</p>}
+      <ActionBar counts={post.counts} labels={labels} className="question-post-actions" />
     </article>
   )
 }
 
-function AppStoreBadge({ compact = false }) {
+function ThreadAnswer({ answer, labels, alt = false }) {
+  return (
+    <div className="thread-answer">
+      <div className="story-author">
+        <span className={`mini-avatar ${alt ? 'alt' : ''}`}>{answer.initials}</span>
+        <p><strong>{answer.name}</strong><small>{answer.role}</small></p>
+      </div>
+      <p>{answer.text}</p>
+      <ActionBar counts={answer.counts} labels={labels} className="thread-meta" />
+    </div>
+  )
+}
+
+function AppStoreBadge({ text, compact = false }) {
   return (
     <a
       className={`official-store-badge ${compact ? 'compact-store-badge' : ''}`}
       href={brandLinks.appStore}
       target="_blank"
       rel="noreferrer"
-      aria-label="Descargar HSE.onl en el App Store"
+      aria-label={text.aria}
     >
       <AppleIcon />
       <span>
-        <small>Descárgalo en el</small>
+        <small>{text.eyebrow}</small>
         <strong>App Store</strong>
       </span>
     </a>
   )
 }
 
+function LanguageSwitcher({ locale, onChange, label }) {
+  return (
+    <div className="language-switcher" role="group" aria-label={label}>
+      {localeOptions.map((option) => (
+        <button
+          key={option.code}
+          type="button"
+          className={locale === option.code ? 'active' : ''}
+          aria-pressed={locale === option.code}
+          title={option.name}
+          onClick={() => onChange(option.code)}
+        >
+          {option.short}
+        </button>
+      ))}
+    </div>
+  )
+}
+
+function getInitialLocale() {
+  if (typeof window === 'undefined') return 'es'
+  try {
+    const stored = window.localStorage.getItem('hse-locale')
+    if (stored && copy[stored]) return stored
+  } catch {
+    // Local storage can be unavailable in privacy-focused browser modes.
+  }
+  return 'es'
+}
+
 function App() {
+  const [locale, setLocale] = useState(getInitialLocale)
+  const t = copy[locale]
+
+  useEffect(() => {
+    document.documentElement.lang = locale
+    document.title = t.meta.title
+    const description = document.querySelector('meta[name="description"]')
+    if (description) description.setAttribute('content', t.meta.description)
+    try {
+      window.localStorage.setItem('hse-locale', locale)
+    } catch {
+      // The language still changes even when persistence is unavailable.
+    }
+  }, [locale, t.meta.description, t.meta.title])
+
   return (
     <div className="site-shell">
       <header className="site-header">
-        <a className="brand" href="#inicio" aria-label="HSE.onl, inicio">
+        <a className="brand" href="#inicio" aria-label={t.aria.home}>
           <span className="brand-mark">H</span>
           <span className="brand-word">HSE.onl</span>
         </a>
-        <nav className="nav-links" aria-label="Navegación principal">
-          <a href="#feed">Feed profesional</a>
-          <a href="#como-funciona">Cómo funciona</a>
-          <a href="#suscripcion">Suscripción</a>
+        <nav className="nav-links" aria-label={t.aria.nav}>
+          <a href="#feed">{t.nav.feed}</a>
+          <a href="#como-funciona">{t.nav.how}</a>
+          <a href="#suscripcion">{t.nav.subscription}</a>
         </nav>
-        <a className="nav-cta" href={brandLinks.appStore} target="_blank" rel="noreferrer">
-          Descargar
-          <ArrowIcon />
-        </a>
+        <div className="header-actions">
+          <LanguageSwitcher locale={locale} onChange={setLocale} label={t.aria.language} />
+          <a className="nav-cta" href={brandLinks.appStore} target="_blank" rel="noreferrer">
+            {t.nav.download}
+            <ArrowIcon />
+          </a>
+        </div>
       </header>
 
       <main>
@@ -163,175 +255,119 @@ function App() {
           <div className="hero-copy">
             <div className="eyebrow">
               <SparkIcon />
-              Preguntas de IA. Respuestas de profesionales.
+              {t.hero.eyebrow}
             </div>
-            <h1>Tu carrera puede enseñar a alguien.</h1>
-            <p className="hero-lede">
-              HSE.onl convierte trayectorias profesionales en preguntas útiles. Descubre cómo otras personas tomaron decisiones, superaron errores y construyeron su carrera.
-            </p>
+            <h1>{t.hero.title}</h1>
+            <p className="hero-lede">{t.hero.lede}</p>
             <div className="hero-actions">
-              <AppStoreBadge compact />
-              <a className="button button-ghost" href="#feed">
-                Ver el feed
-              </a>
+              <AppStoreBadge text={t.store} compact />
+              <a className="button button-ghost" href="#feed">{t.hero.viewFeed}</a>
             </div>
-            <div className="hero-proof" aria-label="Propuesta de la comunidad">
+            <div className="hero-proof" aria-label={t.aria.community}>
               <div className="avatar-stack" aria-hidden="true">
-                <span>PM</span>
-                <span>UX</span>
-                <span>DS</span>
-                <span>+2k</span>
+                <span>PM</span><span>UX</span><span>DS</span><span>+2k</span>
               </div>
               <p>
-                <strong>Aprende de carreras reales</strong>
-                <span>Preguntas generadas por IA, respuestas escritas por personas.</span>
+                <strong>{t.hero.proofTitle}</strong>
+                <span>{t.hero.proofText}</span>
               </p>
             </div>
           </div>
 
-          <div className="hero-visual" aria-label="Vista previa del feed profesional de HSE.onl">
+          <div className="hero-visual" aria-label={t.aria.heroPreview}>
             <div className="orb orb-one" />
             <div className="orb orb-two" />
-            <PhoneFrame label="Feed de preguntas profesionales de HSE.onl" className="hero-phone feed-phone">
-              <FeedHeader />
-              <div className="feed-tabs"><span className="active">Recomendado</span><span>Siguiendo</span></div>
+            <PhoneFrame label={t.aria.heroPreview} className="hero-phone feed-phone">
+              <FeedHeader title={t.hero.feedHeader} menuLabel={t.aria.menu} />
+              <div className="feed-tabs"><span className="active">{t.hero.tabs[0]}</span><span>{t.hero.tabs[1]}</span></div>
               <div className="career-feed-scroll">
-                <QuestionPost
-                  initials="IA"
-                  role="Producto"
-                  time="12 min"
-                  question="¿Qué error de producto te enseñó más que cualquier lanzamiento exitoso?"
-                  preview="Cancelé una funcionalidad después de seis meses. El problema no era la ejecución: nunca validamos la urgencia…"
-                  answers="38"
-                  accent="featured-question"
-                />
-                <QuestionPost
-                  initials="IA"
-                  role="Cambio de carrera"
-                  time="34 min"
-                  question="¿Cómo supiste que era momento de dejar una profesión estable?"
-                  answers="24"
-                />
-                <QuestionPost
-                  initials="IA"
-                  role="Liderazgo"
-                  time="1 h"
-                  question="¿Qué conversación difícil evitaste demasiado tiempo como manager?"
-                  answers="51"
-                />
+                {t.hero.posts.map((post, index) => (
+                  <QuestionPost key={post.question} post={post} labels={t.actions} accent={index === 0 ? 'featured-question' : ''} />
+                ))}
               </div>
               <div className="feed-bottom-nav"><span>⌂</span><span>⌕</span><span className="feed-add">+</span><span>♧</span><span>○</span></div>
             </PhoneFrame>
             <div className="floating-card floating-card-top">
               <span className="floating-icon">CV</span>
-              <p><strong>Trayectoria analizada</strong><small>12 preguntas preparadas</small></p>
+              <p><strong>{t.hero.analyzedTitle}</strong><small>{t.hero.analyzedText}</small></p>
             </div>
             <div className="floating-card floating-card-bottom">
               <div className="mini-avatars" aria-hidden="true"><span>M</span><span>L</span><span>J</span></div>
-              <p><strong>38 profesionales</strong><small>respondieron esta pregunta</small></p>
+              <p><strong>{t.hero.professionalsTitle}</strong><small>{t.hero.professionalsText}</small></p>
             </div>
           </div>
         </section>
 
-        <section className="trust-strip" aria-label="Principios de HSE.onl">
-          <span>Tu currículum inicia la conversación</span>
-          <span>La IA pregunta; las personas responden</span>
-          <span>Historias centradas en la carrera</span>
+        <section className="trust-strip" aria-label={t.aria.principles}>
+          {t.trust.map((item) => <span key={item}>{item}</span>)}
         </section>
 
         <section className="section experience-section" id="feed">
           <div className="section-heading centered-heading">
-            <p className="section-kicker">Así se ve HSE.onl</p>
-            <h2>Un feed para entender cómo se construyen las carreras.</h2>
-            <p>Desliza preguntas, abre los hilos que te interesan y compara respuestas de personas con trayectorias distintas.</p>
+            <p className="section-kicker">{t.experience.kicker}</p>
+            <h2>{t.experience.title}</h2>
+            <p>{t.experience.text}</p>
           </div>
 
           <div className="screenshots-grid career-screenshots-grid">
             <article className="screenshot-card screenshot-feed">
               <div className="screenshot-copy">
-                <span>01 · Descubre</span>
-                <h3>Preguntas que nacen de trayectorias profesionales.</h3>
-                <p>La IA transforma momentos de carrera en preguntas concretas que merecen respuestas con contexto.</p>
+                <span>{t.experience.cards[0].step}</span>
+                <h3>{t.experience.cards[0].title}</h3>
+                <p>{t.experience.cards[0].text}</p>
               </div>
-              <PhoneFrame label="Feed infinito de preguntas profesionales en HSE.onl" className="feed-phone">
-                <FeedHeader />
-                <div className="feed-tabs"><span className="active">Para ti</span><span>Recientes</span></div>
+              <PhoneFrame label={t.aria.heroPreview} className="feed-phone">
+                <FeedHeader title={t.feedScreen.header} menuLabel={t.aria.menu} />
+                <div className="feed-tabs"><span className="active">{t.feedScreen.tabs[0]}</span><span>{t.feedScreen.tabs[1]}</span></div>
                 <div className="career-feed-scroll">
-                  <QuestionPost
-                    initials="IA"
-                    role="Emprendimiento"
-                    time="8 min"
-                    question="¿Cuál fue la señal más clara de que tu primera idea de negocio no funcionaba?"
-                    preview="Las personas elogiaban la demo, pero nadie cambiaba su proceso para usarla…"
-                    answers="42"
-                    accent="featured-question"
-                  />
-                  <QuestionPost
-                    initials="IA"
-                    role="Tecnología"
-                    time="27 min"
-                    question="¿Qué habilidad subestimaste al pasar de ingeniería a liderazgo?"
-                    answers="31"
-                  />
-                  <QuestionPost
-                    initials="IA"
-                    role="Primer empleo"
-                    time="46 min"
-                    question="¿Qué habrías negociado de otra manera en tu primer contrato?"
-                    answers="64"
-                  />
+                  {t.feedScreen.posts.map((post, index) => (
+                    <QuestionPost key={post.question} post={post} labels={t.actions} accent={index === 0 ? 'featured-question' : ''} />
+                  ))}
                 </div>
               </PhoneFrame>
             </article>
 
             <article className="screenshot-card screenshot-chat">
               <div className="screenshot-copy">
-                <span>02 · Compara</span>
-                <h3>Toca una pregunta y lee cómo la resolvieron otros.</h3>
-                <p>Cada hilo reúne respuestas breves, perfiles profesionales y aprendizajes que puedes guardar.</p>
+                <span>{t.experience.cards[1].step}</span>
+                <h3>{t.experience.cards[1].title}</h3>
+                <p>{t.experience.cards[1].text}</p>
               </div>
-              <PhoneFrame label="Hilo con respuestas profesionales en HSE.onl" className="thread-phone">
-                <FeedHeader title="38 respuestas" back />
+              <PhoneFrame label={t.threadScreen.header} className="thread-phone">
+                <FeedHeader title={t.threadScreen.header} back menuLabel={t.aria.menu} />
                 <div className="thread-question">
-                  <span><SparkIcon /> Pregunta generada por IA</span>
-                  <h4>¿Qué error de producto te enseñó más que cualquier lanzamiento exitoso?</h4>
+                  <span><SparkIcon /> {t.threadScreen.aiLabel}</span>
+                  <h4>{t.threadScreen.question}</h4>
                 </div>
-                <div className="thread-answer">
-                  <div className="story-author"><span className="mini-avatar">MC</span><p><strong>Marina C.</strong><small>Product Lead · Madrid</small></p></div>
-                  <p>Construimos para usuarios avanzados porque eran quienes más hablaban. Los nuevos usuarios abandonaban antes de llegar al valor.</p>
-                  <div className="thread-meta"><span>♡ 148</span><span>Responder</span><span>Guardar</span></div>
-                </div>
-                <div className="thread-answer">
-                  <div className="story-author"><span className="mini-avatar alt">JP</span><p><strong>Jorge P.</strong><small>Founder · Valencia</small></p></div>
-                  <p>Confundí interés con intención de compra. Desde entonces pregunto qué dejarían de usar para adoptar mi producto.</p>
-                  <div className="thread-meta"><span>♡ 92</span><span>Responder</span><span>Guardar</span></div>
-                </div>
-                <button className="answer-question-button" type="button">Añadir mi respuesta</button>
+                {t.threadScreen.answers.map((answer, index) => (
+                  <ThreadAnswer key={answer.name} answer={answer} labels={t.actions} alt={index === 1} />
+                ))}
+                <button className="answer-question-button" type="button">{t.threadScreen.add}</button>
               </PhoneFrame>
             </article>
 
             <article className="screenshot-card screenshot-publish">
               <div className="screenshot-copy">
-                <span>03 · Reflexiona</span>
-                <h3>Responde para ayudar y entender mejor tu propia carrera.</h3>
-                <p>Tu currículum aporta el contexto; tus respuestas convierten decisiones y errores en aprendizaje.</p>
+                <span>{t.experience.cards[2].step}</span>
+                <h3>{t.experience.cards[2].title}</h3>
+                <p>{t.experience.cards[2].text}</p>
               </div>
-              <PhoneFrame label="Pantalla para responder una pregunta profesional en HSE.onl" className="answer-phone">
-                <FeedHeader title="Tu respuesta" back />
+              <PhoneFrame label={t.publishScreen.header} className="answer-phone">
+                <FeedHeader title={t.publishScreen.header} back menuLabel={t.aria.menu} />
                 <div className="answer-context">
-                  <span>Pregunta sugerida a partir de tu CV</span>
-                  <h4>¿Qué aprendiste al cambiar de una empresa grande a una startup?</h4>
+                  <span>{t.publishScreen.suggestion}</span>
+                  <h4>{t.publishScreen.question}</h4>
                 </div>
                 <div className="answer-editor">
-                  <p>Al principio intenté reproducir procesos que solo funcionaban con equipos mucho más grandes. Aprendí a distinguir entre control y claridad…</p>
+                  <p>{t.publishScreen.editor}</p>
                   <span className="editor-cursor" />
                 </div>
                 <div className="reflection-card">
                   <SparkIcon />
-                  <p><strong>Una pregunta para profundizar</strong><small>¿Qué proceso eliminaste primero y qué cambió después?</small></p>
+                  <p><strong>{t.publishScreen.reflectionTitle}</strong><small>{t.publishScreen.reflectionText}</small></p>
                 </div>
-                <div className="answer-tags"><span>#cambiodecarrera</span><span>#startups</span></div>
-                <button className="publish-button" type="button">Publicar respuesta</button>
+                <div className="answer-tags">{t.publishScreen.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
+                <button className="publish-button" type="button">{t.publishScreen.publish}</button>
               </PhoneFrame>
             </article>
           </div>
@@ -339,12 +375,12 @@ function App() {
 
         <section className="section how-section" id="como-funciona">
           <div className="section-heading">
-            <p className="section-kicker">Cómo funciona</p>
-            <h2>Tu currículum abre preguntas que vale la pena responder.</h2>
-            <p>HSE.onl convierte tu trayectoria en una oportunidad para ayudar a otros y revisar tu propio aprendizaje profesional.</p>
+            <p className="section-kicker">{t.how.kicker}</p>
+            <h2>{t.how.title}</h2>
+            <p>{t.how.text}</p>
           </div>
           <div className="benefits-grid">
-            {benefits.map((benefit) => (
+            {t.how.benefits.map((benefit) => (
               <article className="benefit-card" key={benefit.number}>
                 <span className="benefit-number">{benefit.number}</span>
                 <h3>{benefit.title}</h3>
@@ -356,76 +392,68 @@ function App() {
 
         <section className="section values-section">
           <div className="values-visual">
-            <div className="quote-card quote-card-one">
-              <span className="quote-mark">“</span>
-              <p>Leer varias respuestas a la misma pregunta me mostró que no existe una sola carrera correcta.</p>
-              <div><span className="mini-avatar">LA</span><strong>Lucía, Product Manager</strong></div>
-            </div>
-            <div className="quote-card quote-card-two">
-              <span className="quote-mark">“</span>
-              <p>Responder me obligó a entender por qué repetía el mismo error al cambiar de equipo.</p>
-              <div><span className="mini-avatar alt">DM</span><strong>Diego, Data Lead</strong></div>
-            </div>
+            {t.values.quotes.map((quote, index) => (
+              <div className={`quote-card ${index === 0 ? 'quote-card-one' : 'quote-card-two'}`} key={quote.text}>
+                <span className="quote-mark">“</span>
+                <p>{quote.text}</p>
+                <div><span className={`mini-avatar ${index === 1 ? 'alt' : ''}`}>{index === 0 ? 'LA' : 'DM'}</span><strong>{quote.person}</strong></div>
+              </div>
+            ))}
           </div>
           <div className="values-copy">
-            <p className="section-kicker">Aprendizaje profesional colectivo</p>
-            <h2>La IA encuentra la pregunta. Las personas aportan la experiencia.</h2>
-            <p>HSE.onl no inventa historias: genera preguntas a partir de trayectorias y reúne respuestas humanas en un feed enfocado en la carrera.</p>
+            <p className="section-kicker">{t.values.kicker}</p>
+            <h2>{t.values.title}</h2>
+            <p>{t.values.text}</p>
             <ul>
-              <li><CheckIcon /><span><strong>Contexto profesional.</strong> El CV ayuda a proponer preguntas relevantes para cada etapa.</span></li>
-              <li><CheckIcon /><span><strong>Respuestas humanas.</strong> Cada aprendizaje publicado pertenece a la persona que lo vivió.</span></li>
-              <li><CheckIcon /><span><strong>Reflexión propia.</strong> Responder también te permite estudiar tus decisiones y patrones.</span></li>
+              {t.values.bullets.map((bullet) => (
+                <li key={bullet.title}><CheckIcon /><span><strong>{bullet.title}</strong> {bullet.text}</span></li>
+              ))}
             </ul>
           </div>
         </section>
 
         <section className="section subscription-section" id="suscripcion">
           <div className="subscription-copy">
-            <p className="section-kicker">Suscripción</p>
-            <h2>Un mes para estudiar carreras, incluida la tuya.</h2>
-            <p>Accede al feed completo, abre todos los hilos y recibe preguntas profesionales generadas a partir de tu currículum.</p>
+            <p className="section-kicker">{t.subscription.kicker}</p>
+            <h2>{t.subscription.title}</h2>
+            <p>{t.subscription.text}</p>
             <ul className="terms-list">
-              {subscriptionTerms.map((term) => (
-                <li key={term}><CheckIcon />{term}</li>
-              ))}
+              {t.subscription.terms.map((term) => <li key={term}><CheckIcon />{term}</li>)}
             </ul>
-            <p className="legal-note">El precio y las condiciones de renovación se muestran también en el App Store antes de confirmar la compra.</p>
+            <p className="legal-note">{t.subscription.legal}</p>
           </div>
           <div className="plan-card">
-            <div className="plan-badge">Suscripción mensual</div>
+            <div className="plan-badge">{t.subscription.badge}</div>
             <p className="plan-name">HSE.onl</p>
-            <div className="plan-price"><strong>20 €</strong><span>por mes</span></div>
+            <div className="plan-price"><strong>20 €</strong><span>{t.subscription.perMonth}</span></div>
             <div className="plan-divider" />
             <ul>
-              <li><CheckIcon />Feed profesional completo</li>
-              <li><CheckIcon />Preguntas generadas a partir de tu CV</li>
-              <li><CheckIcon />Todos los hilos y respuestas</li>
-              <li><CheckIcon />Publicaciones y guardados sin límite</li>
+              {t.subscription.features.map((feature) => <li key={feature}><CheckIcon />{feature}</li>)}
             </ul>
-            <AppStoreBadge />
-            <small>Disponible ahora en el App Store. La suscripción se gestiona con tu cuenta de Apple.</small>
+            <AppStoreBadge text={t.store} />
+            <small>{t.subscription.available}</small>
           </div>
         </section>
 
         <section className="download-section" id="descarga">
           <div className="download-glow" />
           <div className="download-content">
-            <p className="section-kicker light-kicker">Tu carrera tiene respuestas</p>
-            <h2>Descubre lo que otros aprendieron. Entiende mejor lo que aprendiste tú.</h2>
-            <p>Descarga HSE.onl, sube tu currículum y entra en un feed de preguntas que convierte carreras en conocimiento compartido.</p>
+            <p className="section-kicker light-kicker">{t.download.kicker}</p>
+            <h2>{t.download.title}</h2>
+            <p>{t.download.text}</p>
             <div className="download-actions">
-              <AppStoreBadge />
+              <AppStoreBadge text={t.store} />
               <a className="contact-link" href={`mailto:${brandLinks.email}`}>
-                Contactar
+                {t.download.contact}
                 <ArrowIcon />
               </a>
             </div>
           </div>
           <div className="download-phone" aria-hidden="true">
-            <PhoneFrame label="Pantalla de bienvenida de HSE.onl">
+            <PhoneFrame label={t.download.welcome}>
               <div className="welcome-screen">
                 <span className="welcome-logo">H</span>
-                <p>Tu carrera puede enseñar a alguien.</p>
+                <p>{t.download.welcome}</p>
                 <div className="welcome-lines"><span /><span /><span /></div>
               </div>
             </PhoneFrame>
@@ -437,24 +465,24 @@ function App() {
         <div className="footer-main">
           <div>
             <a className="brand footer-brand" href="#inicio"><span className="brand-mark">H</span><span className="brand-word">HSE.onl</span></a>
-            <p>Un feed profesional en español con preguntas de IA y respuestas de personas que comparten lo aprendido en su carrera.</p>
+            <p>{t.footer.description}</p>
           </div>
           <div className="footer-column">
-            <strong>Explora</strong>
-            <a href="#feed">Feed profesional</a>
-            <a href="#como-funciona">Cómo funciona</a>
-            <a href="#suscripcion">Suscripción</a>
+            <strong>{t.footer.explore}</strong>
+            <a href="#feed">{t.nav.feed}</a>
+            <a href="#como-funciona">{t.nav.how}</a>
+            <a href="#suscripcion">{t.nav.subscription}</a>
           </div>
           <div className="footer-column">
-            <strong>Contacto</strong>
+            <strong>{t.footer.contact}</strong>
             <a href={`mailto:${brandLinks.email}`}>{brandLinks.email}</a>
             <a href={brandLinks.instagram} target="_blank" rel="noreferrer" className="social-link"><InstagramIcon />Instagram</a>
             <a href={brandLinks.appStore} target="_blank" rel="noreferrer" className="social-link"><AppleIcon />App Store</a>
           </div>
         </div>
         <div className="footer-bottom">
-          <span>© 2026 HSE.onl. Todos los derechos reservados.</span>
-          <div><a href="#suscripcion">Condiciones</a><a href={`mailto:${brandLinks.email}?subject=Privacidad%20en%20HSE.onl`}>Privacidad</a></div>
+          <span>{t.footer.rights}</span>
+          <div><a href="#suscripcion">{t.footer.terms}</a><a href={`mailto:${brandLinks.email}?subject=${encodeURIComponent(t.footer.privacy)}%20HSE.onl`}>{t.footer.privacy}</a></div>
         </div>
       </footer>
     </div>
