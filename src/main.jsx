@@ -4,6 +4,7 @@ import './index.css'
 import App from './App.jsx'
 import './uiFixes.css'
 import { applyLanguageSelect } from './languageSelect.js'
+import { applyHealthcareEnhancements } from './healthcareEnhancements.js'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -11,4 +12,7 @@ createRoot(document.getElementById('root')).render(
   </StrictMode>,
 )
 
-queueMicrotask(applyLanguageSelect)
+queueMicrotask(() => {
+  applyLanguageSelect()
+  applyHealthcareEnhancements()
+})
