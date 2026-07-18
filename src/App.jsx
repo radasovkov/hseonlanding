@@ -5,7 +5,7 @@ import './localization.css'
 import { copy, localeOptions } from './translations.js'
 
 const brandLinks = {
-  email: 'hola@hse.onl',
+  email: 'hola@infojobs.space',
   instagram: 'https://www.instagram.com/hse.onl/',
   appStore: 'https://apps.apple.com/es/search?term=HSE.onl',
 }
