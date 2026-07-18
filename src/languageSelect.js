@@ -1,8 +1,6 @@
 const localeOptions = [
   { code: 'es', label: 'ES — Español' },
   { code: 'en', label: 'EN — English' },
-  { code: 'it', label: 'IT — Italiano' },
-  { code: 'ru', label: 'RU — Русский' },
 ]
 
 function mountLanguageSelect() {
