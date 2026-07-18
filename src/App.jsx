@@ -208,14 +208,23 @@ function LanguageSwitcher({ locale, onChange, label }) {
 }
 
 function getInitialLocale() {
-  if (typeof window === 'undefined') return 'es'
+  // Получить основной язык (например, "ru" или "en-US")
+  const userLanguage = navigator.language || navigator.userLanguage; 
+
+  console.log(userLanguage); // Выведет "ru-RU", "ru", "en-US" и т.д.
+
+  // Если нужна только двухбуквенная локаль (ru, en, de)
+  const shortLang = userLanguage.slice(0, 2); 
+  
+  // console.log(shortLang); // "ru"
+  // if (typeof window === 'undefined') return 'es'
   try {
     const stored = window.localStorage.getItem('hse-locale')
     if (stored && copy[stored]) return stored
   } catch {
     // Local storage can be unavailable in privacy-focused browser modes.
   }
-  return 'es'
+  return copy[shortLang] ? shortLang : 'es'; // Возвращаем "ru" или "es" по умолчанию
 }
 
 function App() {
